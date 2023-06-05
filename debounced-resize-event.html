@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body onload="main()">
+<script>
+    function debounceClosure() {
+        let timeoutId;
+
+        return (callback) => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+
+            timeoutId = setTimeout(() => {
+                callback();
+            }, 300);
+        }
+    }
+
+    const debounce = debounceClosure()
+
+    function main() {
+        const currentWidthEl = document.querySelector('#current-width');
+        currentWidthEl.textContent = String(window.innerWidth);
+
+        function handleResize() {
+            debounce(() => {
+                currentWidthEl.textContent = String(window.innerWidth);
+            })
+        }
+
+        window.addEventListener("resize", handleResize);
+    }
+</script>
+<h2>Current Width:</h2>
+<div id="current-width"></div>
+</body>
+</html>

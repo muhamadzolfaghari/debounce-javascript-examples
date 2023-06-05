@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  function debounceClosure() {
+    let timeoutId;
+
+    return (callback) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(() => {
+        callback();
+      }, 300);
+    };
+  }
+
+  const debounce = debounceClosure();
+
+  function handleChange(event) {
+    debounce(() => {
+      const liEl = document.createElement("li");
+      liEl.textContent = "?search=" + event.target.value;
+      document.querySelector("ul").appendChild(liEl);
+    });
+  }
+</script>
+<label>
+  <input width="200" style="padding: 20px" type="text" onkeyup="handleChange(event)">
+</label>
+<div style="direction: ltr; padding: 10px">
+  <h2>requests</h2>
+  <ul></ul>
+</div>
+</body>
+</html>
